@@ -5,6 +5,8 @@ from .EmbPattern import EmbPattern
 TENTH_MM_PER_INCH = 254
 
 def read(f: TextIO, out: EmbPattern, settings=None):
+    first_segment = True
+
     for line in f:
         line = line.strip()
         if not line:
@@ -19,14 +21,21 @@ def read(f: TextIO, out: EmbPattern, settings=None):
         except ValueError:
             continue
 
-        # Convert inches → tenths of mm (Pystitch internal units)
+        # Scale
         x1 *= TENTH_MM_PER_INCH
         y1 *= TENTH_MM_PER_INCH
         x2 *= TENTH_MM_PER_INCH
         y2 *= TENTH_MM_PER_INCH
 
-        # Move and stitch absolute
-        out.move_abs(x1, y1)
+        if first_segment:
+            # Move to start only ONCE
+            out.move_abs(x1, y1)
+            first_segment = False
+        else:
+            # Continue stitching to next segment start
+            out.stitch_abs(x1, y1)
+
+        # Now stitch the segment
         out.stitch_abs(x2, y2)
 
     out.end()
