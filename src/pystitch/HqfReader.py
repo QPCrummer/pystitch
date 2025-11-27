@@ -1,4 +1,4 @@
-# hqf.py — Reader for HandiQuilter .hqf line-segment files
+# HqfReader.py — Reader for HandiQuilter .hqf line-segment files
 from typing import BinaryIO
 from .EmbPattern import EmbPattern
 

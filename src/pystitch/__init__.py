@@ -37,6 +37,7 @@ import pystitch.GcodeReader as GcodeReader
 import pystitch.GcodeWriter as GcodeWriter
 import pystitch.InkstitchGcodeWriter as InkstitchGcodeWriter
 import pystitch.GtReader as GtReader
+import pystitch.HqfReader as HqfReader
 import pystitch.HusReader as HusReader
 import pystitch.InbReader as InbReader
 import pystitch.InfReader as InfReader
@@ -685,6 +686,16 @@ def supported_formats():
             "category": "quilting",
             "reader": QccReader,
             "writer": QccWriter,
+        }
+    )
+    yield (
+        {
+            "description": "Hqf - Handi-Quilter",
+            "extension": "hqf",
+            "extensions": ("hqf",),
+            "mimetype": "text/plain",
+            "category": "quilting",
+            "reader": HqfReader,
         }
     )
     yield (
