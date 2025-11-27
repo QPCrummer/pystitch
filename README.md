@@ -187,6 +187,7 @@ Pystitch will read:
 * qcc
 
 Pystitch will write:
+* hqf
 * plt
 * qcc
 

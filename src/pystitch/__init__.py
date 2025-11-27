@@ -38,6 +38,7 @@ import pystitch.GcodeWriter as GcodeWriter
 import pystitch.InkstitchGcodeWriter as InkstitchGcodeWriter
 import pystitch.GtReader as GtReader
 import pystitch.HqfReader as HqfReader
+import pystitch.HqfWriter as HqfWriter
 import pystitch.HqvReader as HqvReader
 import pystitch.HusReader as HusReader
 import pystitch.InbReader as InbReader
@@ -697,6 +698,7 @@ def supported_formats():
             "mimetype": "text/plain",
             "category": "quilting",
             "reader": HqfReader,
+            "writer": HqfWriter,
         }
     )
     yield (
@@ -886,6 +888,10 @@ def write_plt(pattern, stream, settings=None):
 def write_qcc(pattern, stream, settings=None):
     """Writes fileobject as QCC file"""
     EmbPattern.write_embroidery(QccWriter, pattern, stream, settings)
+
+def write_hqf(pattern, stream, settings=None):
+    """Writes fileobject as HQF file"""
+    EmbPattern.write_embroidery(HqfWriter, pattern, stream, settings)
 
 def write_svg(pattern, stream, settings=None):
     """Writes fileobject as DST file"""
