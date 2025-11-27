@@ -1,17 +1,19 @@
 # HqfReader.py — Reader for HandiQuilter .hqf line-segment files
-from typing import BinaryIO
+from typing import TextIO
 from .EmbPattern import EmbPattern
 
+TENTH_MM_PER_INCH = 254
 
-def read(f: BinaryIO, out: EmbPattern, settings=None):
-    for raw in f:                            
-        line = raw.decode("utf8").strip()
-        if not line:
-            continue
+
+def read(f: TextIO, out: EmbPattern, settings=None):
+    first_point = True
+    for line in f:
+        line = line.strip()
+        if not line or "M02" in line:  # stop marker
+            break
 
         parts = line.split()
         if len(parts) != 4:
-            # Format error — skip or raise
             continue
 
         try:
@@ -19,10 +21,13 @@ def read(f: BinaryIO, out: EmbPattern, settings=None):
         except ValueError:
             continue
 
-        # Move to start of segment (jump)
-        out.move_abs(x1, y1)
+        if first_point:
+            out.move_abs(x1, y1)
+            first_point = False
+        else:
+            out.stitch_abs(x1, y1)
 
-        # Stitch to end of segment
         out.stitch_abs(x2, y2)
 
     out.end()
+
