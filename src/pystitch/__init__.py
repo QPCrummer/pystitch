@@ -806,6 +806,11 @@ def read_qcc(f, settings=None, pattern=None):
     pattern = EmbPattern.read_embroidery(QccReader, f, settings, pattern)
     return pattern
 
+def read_hqf(f, settings=None, pattern=None):
+    """Reads fileobject as HQF file"""
+    pattern = EmbPattern.read_embroidery(HqfReader, f, settings, pattern)
+    return pattern
+
 def write_dst(pattern, stream, settings=None):
     """Writes fileobject as DST file"""
     EmbPattern.write_embroidery(DstWriter, pattern, stream, settings)
