@@ -90,6 +90,7 @@ import pystitch.ZxyReader as ZxyReader
 
 
 def read(filename, settings=None, pattern=None):
+    print("TEST!!!")
     """Reads file, assuming type by extension"""
     extension = EmbPattern.get_extension_by_filename(filename)
     extension = extension.lower()
