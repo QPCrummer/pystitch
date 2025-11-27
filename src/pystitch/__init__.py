@@ -38,6 +38,7 @@ import pystitch.GcodeWriter as GcodeWriter
 import pystitch.InkstitchGcodeWriter as InkstitchGcodeWriter
 import pystitch.GtReader as GtReader
 import pystitch.HqfReader as HqfReader
+import pystitch.HqvReader as HqvReader
 import pystitch.HusReader as HusReader
 import pystitch.InbReader as InbReader
 import pystitch.InfReader as InfReader
@@ -700,6 +701,16 @@ def supported_formats():
     )
     yield (
         {
+            "description": "Hqv - Handi-Quilter",
+            "extension": "hqv",
+            "extensions": ("hqv",),
+            "mimetype": "text/plain",
+            "category": "quilting",
+            "reader": HqvReader,
+        }
+    )
+    yield (
+        {
             "description": "Edr Color Format",
             "extension": "edr",
             "extensions": ("edr",),
@@ -809,6 +820,11 @@ def read_qcc(f, settings=None, pattern=None):
 def read_hqf(f, settings=None, pattern=None):
     """Reads fileobject as HQF file"""
     pattern = EmbPattern.read_embroidery(HqfReader, f, settings, pattern)
+    return pattern
+
+def read_hqv(f, settings=None, pattern=None):
+    """Reads fileobject as HQV file"""
+    pattern = EmbPattern.read_embroidery(HqvReader, f, settings, pattern)
     return pattern
 
 def write_dst(pattern, stream, settings=None):

@@ -180,6 +180,8 @@ Pystitch will read:
 
 ### Quilting formats
 Pystitch will read:
+* hqf
+* hqv
 * iqp
 * plt
 * qcc
