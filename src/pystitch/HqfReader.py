@@ -3,7 +3,6 @@ from .EmbPattern import EmbPattern
 
 
 def read(f: TextIO, out: EmbPattern, settings=None):
-    print("Hqf Test")
     first_segment = True
     for line in f:
         line = line.strip()

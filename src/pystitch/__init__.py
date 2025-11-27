@@ -93,8 +93,10 @@ def read(filename, settings=None, pattern=None):
     """Reads file, assuming type by extension"""
     extension = EmbPattern.get_extension_by_filename(filename)
     extension = extension.lower()
+    print(extension)
     for file_type in supported_formats():
         if file_type["extension"] != extension:
+            print("Filetype found")
             continue
         reader = file_type.get("reader", None)
         return EmbPattern.read_embroidery(reader, filename, settings, pattern)
