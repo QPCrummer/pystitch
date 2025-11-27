@@ -20,7 +20,7 @@ def read(f: BinaryIO, out: EmbPattern, settings=None):
             continue
 
         # Move to start of segment (jump)
-        out.jump_abs(x1, y1)
+        out.move_abs(x1, y1)
 
         # Stitch to end of segment
         out.stitch_abs(x2, y2)
