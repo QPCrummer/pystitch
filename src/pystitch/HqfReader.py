@@ -23,9 +23,9 @@ def read(f: TextIO, out: EmbPattern, settings=None):
 
         # Scale
         x1 *= TENTH_MM_PER_INCH
-        y1 *= TENTH_MM_PER_INCH
+        y1 *= -TENTH_MM_PER_INCH
         x2 *= TENTH_MM_PER_INCH
-        y2 *= TENTH_MM_PER_INCH
+        y2 *= -TENTH_MM_PER_INCH
 
         if first_segment:
             # Move to start only ONCE
