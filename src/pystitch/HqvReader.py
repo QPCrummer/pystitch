@@ -1,23 +1,29 @@
 # HqvReader.py
-from typing import TextIO
 from .EmbPattern import EmbPattern
 
-TENTH_MM_PER_INCH = 254   # Pystitch uses 1/10 mm units
+TENTH_MM_PER_INCH = 254
 
-def read(f: TextIO, out: EmbPattern, settings=None):
+def read(f, out: EmbPattern, settings=None):
 
     for raw_line in f:
-        line = raw_line.strip()
+        # Handle both bytes (binary mode) and str (text mode)
+        if isinstance(raw_line, bytes):
+            try:
+                line = raw_line.decode("utf-8", errors="ignore").strip()
+            except Exception:
+                continue
+        else:
+            line = raw_line.strip()
 
-        # Stop when reaching the embedded PNG section
+        # Stop before thumbnail block
         if line.startswith(":Thumbnail"):
             break
 
-        # Skip header / metadata lines
-        if line.startswith(":") or not line:
+        # Skip metadata
+        if not line or line.startswith(":"):
             continue
 
-        # Expect format: X,xcoord,ycoord
+        # Expect: COMMAND,x,y
         parts = line.split(",")
         if len(parts) != 3:
             continue
@@ -30,14 +36,9 @@ def read(f: TextIO, out: EmbPattern, settings=None):
         except ValueError:
             continue
 
-        if cmd == "J":          # Jump / move
+        if cmd == "J":
             out.move_abs(x, y)
-
-        elif cmd == "L":        # Stitch line
+        elif cmd == "L":
             out.stitch_abs(x, y)
-
-        else:
-            # Unknown command — ignore
-            continue
 
     out.end()
